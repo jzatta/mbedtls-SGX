@@ -48,7 +48,7 @@ extern "C" {
  *
  * \return         1 if CPU has support for the feature, 0 otherwise
  */
-int mbedtls_aesni_has_support( unsigned int what );
+#define mbedtls_aesni_has_support(k) 1
 
 /**
  * \brief          AES-NI AES-ECB block en(de)cryption

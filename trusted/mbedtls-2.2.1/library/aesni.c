@@ -43,27 +43,6 @@
 #if defined(MBEDTLS_HAVE_X86_64)
 
 /*
- * AES-NI support detection routine
- */
-int mbedtls_aesni_has_support( unsigned int what )
-{
-    static int done = 0;
-    static unsigned int c = 0;
-
-    if( ! done )
-    {
-        asm( "movl  $1, %%eax   \n\t"
-             "cpuid             \n\t"
-             : "=c" (c)
-             :
-             : "eax", "ebx", "edx" );
-        done = 1;
-    }
-
-    return( ( c & what ) != 0 );
-}
-
-/*
  * Binutils needs to be at least 2.19 to support AES-NI instructions.
  * Unfortunately, a lot of users have a lower version now (2014-04).
  * Emit bytecode directly in order to support "old" version of gas.
