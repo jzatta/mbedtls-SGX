@@ -107,6 +107,9 @@ $(PROJECT_NAME)_t.c: $(SGX_EDGER8R)
 		--search-path $(SGX_SDK)/include
 	@echo "GEN =>  $@"
 
+mbedtls-2.2.1/library/aesni.o: mbedtls-2.2.1/library/aesni.c
+	c++ -Ofast -Wall -march=native -std=c++11 -c $< -I mbedtls-2.2.1/include/ -o $@
+
 %.o: %.c
 	@$(CC) $(Enclave_C_Flags) -c $< -o $@
 	@echo "CC <= $<"
