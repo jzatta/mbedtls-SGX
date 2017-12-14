@@ -252,7 +252,14 @@ void mbedtls_aesni_gcm_mult( unsigned char c[16],
 void mbedtls_aesni_inverse_key( unsigned char *invkey,
                         const unsigned char *fwdkey, int nr )
 {
-    
+    int i;
+    __m128i *Key_Schedule = (__m128i*)fwdkey;
+    __m128i *Key_ScheduleIv = (__m128i*)invkey;
+    Key_ScheduleIv[0] = Key_Schedule[nr];
+    for (i = 1; i < nr; i++) {
+        Key_ScheduleIv[i] = _mm_aesimc_si128(Key_Schedule[nr-i]);
+    }
+    Key_ScheduleIv[nr] = Key_Schedule[0];
 }
 
 
